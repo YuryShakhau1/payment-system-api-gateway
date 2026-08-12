@@ -1,0 +1,32 @@
+spring:
+  jwt:
+    public-key: "classpath:certs/public_key.pem"
+
+  config:
+    import: optional:file:../.env[.properties]
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: core-auth-service
+          uri: http://localhost:${AUTH_SERVICE_PORT}
+          predicates:
+            - Path=/auth/**
+
+        - id: core-user-service
+          uri: http://localhost:${USER_SERVICE_PORT}
+          predicates:
+            - Path=/users/**
+
+        - id: payment-system-product-service
+          uri: http://localhost:${PRODUCT_SERVICE_PORT}
+          predicates:
+            - Path=/products/**
+
+        - id: payment-system-order-service
+          uri: http://localhost:${ORDER_SERVICE_PORT}
+          predicates:
+            - Path=/orders/**
+
+

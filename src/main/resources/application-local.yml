@@ -1,0 +1,3 @@
+server:
+  port: ${API_GATE_WAY_SERVICE_PORT}
+
