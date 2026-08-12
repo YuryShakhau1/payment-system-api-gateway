@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: test
+
+  jwt:
+    public-key: "classpath:certs/public_key.pem"
+
+  config:
+    import: optional:file:../.env[.properties]

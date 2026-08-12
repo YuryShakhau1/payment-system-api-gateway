@@ -29,4 +29,7 @@ spring:
           predicates:
             - Path=/orders/**
 
-
+        - id: payment-system-payment-service
+          uri: http://localhost:${PAYMENT_SERVICE_PORT}
+          predicates:
+            - Path=/payments/**

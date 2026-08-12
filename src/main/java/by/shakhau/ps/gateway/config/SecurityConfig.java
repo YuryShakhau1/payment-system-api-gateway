@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.GET, "/products").permitAll()
                         .pathMatchers(HttpMethod.GET, "/products/*").permitAll()
                         .pathMatchers(HttpMethod.POST, "/products/filter").permitAll()
+
                         .pathMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.POST, "/products/list").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.PATCH, "/products/**").hasRole("ADMIN")
@@ -66,6 +67,12 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.GET, "/orders/users/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.PATCH, "/orders/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.DELETE, "/orders/**").hasRole("ADMIN")
+
+                        // Payment service
+                        .pathMatchers(HttpMethod.GET, "/payments/me").authenticated()
+                        .pathMatchers(HttpMethod.GET, "/payments/total-sum/me").authenticated()
+                        .pathMatchers(HttpMethod.GET, "/payments").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.GET, "/payments/total-sum").hasRole("ADMIN")
 
                         .anyExchange().authenticated())
                 .addFilterAfter(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
