@@ -1,2 +1,4 @@
-server:
-  port: ${API_GATE_WAY_SERVICE_PORT}
+spring:
+  config:
+    activate:
+      on-profile: docker

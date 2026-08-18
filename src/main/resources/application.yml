@@ -1,35 +1,50 @@
+server:
+  port: ${API_GATE_WAY_SERVICE_PORT}
+
 spring:
   jwt:
     public-key: "classpath:certs/public_key.pem"
 
   config:
-    import: optional:file:../.env[.properties]
+    import: optional:file:.env[.properties]
 
   cloud:
     gateway:
       routes:
 
         - id: core-auth-service
-          uri: http://localhost:${AUTH_SERVICE_PORT}
+          uri: ${AUTH_SERVICE_URL}
           predicates:
             - Path=/auth/**
 
         - id: core-user-service
-          uri: http://localhost:${USER_SERVICE_PORT}
+          uri: ${USER_SERVICE_URL}
           predicates:
             - Path=/users/**
 
         - id: payment-system-product-service
-          uri: http://localhost:${PRODUCT_SERVICE_PORT}
+          uri: ${PRODUCT_SERVICE_URL}
           predicates:
             - Path=/products/**
 
         - id: payment-system-order-service
-          uri: http://localhost:${ORDER_SERVICE_PORT}
+          uri: ${ORDER_SERVICE_URL}
           predicates:
             - Path=/orders/**
 
         - id: payment-system-payment-service
-          uri: http://localhost:${PAYMENT_SERVICE_PORT}
+          uri: ${PAYMENT_SERVICE_URL}
           predicates:
             - Path=/payments/**
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info
